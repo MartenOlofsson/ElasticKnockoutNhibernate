@@ -2,12 +2,31 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>Pets!</title>
+    <meta charset="UTF-8">
 </head>
+
 <body>
-<div>
-    <input type="text" data-bind="value: name" />
-    <input type="submit" value="Spara" data-bind="click:save"/>
-</div>
+    <div>
+        <div data-bind="visible : addingNew" style="height: 200px;">
+            <div>
+                <label>Namn</label>
+                <input type="text" data-bind="value: name"/>
+            </div>
+            <div>
+                <label>Ålder</label>
+                <input type="text" data-bind="value: age" />
+            </div>
+            <div>
+                <input type="submit" value="Spara" data-bind="click:save" />
+            </div>
+        </div>
+        <a href="#" data-bind="click: toggleAddNew">Lägg till.</a>
+        <h1>Ägare</h1>
+        <ul data-bind="foreach: owners">
+            <li data-bind="text: name"></li>
+        </ul>
+    </div>
+    <script type="text/javascript" src="/static/scripts/jquery-2.1.3.js"></script>
     <script type="text/javascript" src="/static/scripts/knockout-3.3.0.js"></script>
     <script type="text/javascript" src="/static/scripts/ownerViewModel.js"></script>
 </body>

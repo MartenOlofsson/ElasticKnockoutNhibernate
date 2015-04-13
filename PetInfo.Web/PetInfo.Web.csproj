@@ -74,7 +74,10 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="static\scripts\jquery-2.1.3.js" />
     <Content Include="static\scripts\ownerViewModel.js.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -91,10 +94,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="modules\IndexModule.cs" />
+    <Compile Include="models\Owner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="static\typings\jquery\jquery.d.ts" />
     <TypeScriptCompile Include="static\typings\knockout\knockout.d.ts" />
     <TypeScriptCompile Include="static\scripts\ownerViewModel.ts" />
   </ItemGroup>
