@@ -1,11 +1,7 @@
-using System.Collections.Generic;
-using System.Linq;
 using Nancy;
 using Nancy.ModelBinding;
 using Nancy.Responses;
 using Nancy.Serialization.JsonNet;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using PetInfo.Web.Hibernate;
 using PetInfo.Web.models;
 using PetInfo.Web.Search;
@@ -29,15 +25,22 @@ namespace PetInfo.Web.modules
             };
             Post["/owners/save", true] = async (x, ct) =>
             {
-                var owner = this.Bind<Owner>();
+                var owner = this.Bind<OwnerModel>();
 
-                _repository.Save<Owner>(owner);
+                _repository.Save<Owner>(new Owner
+                {
+                    Age = owner.Age,
+                    Name = owner.Name,
+                    
+                });
                 return HttpStatusCode.OK;
             };
             Get["/search", true] = async (x, ct) =>
             {
                 var all = await _client.GetAll();
-                return new JsonResponse(all.Documents, new DefaultJsonSerializer());
+
+                var docs = all.Documents;
+                return new JsonResponse(docs, new DefaultJsonSerializer());
             };
             Get["/search/{query}", true] = async (x, ct) =>
             {

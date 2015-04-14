@@ -38,6 +38,14 @@
                 <span data-bind="text: Name"></span>
                 <h4>Ålder</h4>
                 <span data-bind="text: Age"></span>
+                <!-- ko if: $parent.haspets-->
+                <span>Inga husdjur ännu...</span>
+                <!--/ko-->
+                <ul data-bind="foreach: Pets">
+                    <li>
+                        <span data-bind="text: Name"></span>
+                    </li>
+                </ul>
             </li>
         </ul>
     </div>

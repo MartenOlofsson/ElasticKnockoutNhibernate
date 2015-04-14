@@ -12,14 +12,18 @@ class OwnersViewModel {
     Age = ko.observable<Number>();
     searchterm = ko.observable<String>();
     searchjson = ko.observable();
-
+    haspets = ko.computed(function() {
+        
+    });
+    Pets = ko.observableArray([]);
     owners = ko.observableArray<Owner>([]);
     addingNew = ko.observable<Boolean>(false);
     save() {
         this.saveUser();
     }
 
-    search() {
+
+    search(searchquery : string) {
         $.ajax({
             url: "/search/" + this.searchterm(),
         }).done((data) => {
@@ -34,13 +38,15 @@ class OwnersViewModel {
     }
 
     saveUser() {
-        var json = ko.toJSON(this);
+        var json = JSON.stringify({ Name: this.Name(), Pets: this.Pets(), Age: this.Age(), Id: 123 });
+        json = ko.toJSON(this);
         this.owners.push(this);
         $.ajax({
             url: "/owners/save",
             method: 'POST',
             contentType: "application/json",
-            data: json
+            dataType: 'json',
+            data: json,
         }).done((data) => {
             console.log(data);
         }).fail((ex) => {
@@ -52,14 +58,12 @@ class OwnersViewModel {
         $.ajax({
             url: "/owners"
         }).done((data) => {
-                debugger;
             var ownersFromServer = ko.toJS(data);
             for (var i = 0; i < ownersFromServer.length; i++) {
                 this.owners.push(ownersFromServer[i]);
             }
         })
             .fail((ex) => {
-                debugger;
             console.log(ex);
         });
     }

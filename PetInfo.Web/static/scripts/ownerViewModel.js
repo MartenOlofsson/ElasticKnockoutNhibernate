@@ -15,6 +15,9 @@ var OwnersViewModel = (function () {
         this.Age = ko.observable();
         this.searchterm = ko.observable();
         this.searchjson = ko.observable();
+        this.haspets = ko.computed(function () {
+        });
+        this.Pets = ko.observableArray([]);
         this.owners = ko.observableArray([]);
         this.addingNew = ko.observable(false);
     }
@@ -22,7 +25,7 @@ var OwnersViewModel = (function () {
         this.saveUser();
     };
 
-    OwnersViewModel.prototype.search = function () {
+    OwnersViewModel.prototype.search = function (searchquery) {
         var _this = this;
         $.ajax({
             url: "/search/" + this.searchterm()
@@ -39,12 +42,14 @@ var OwnersViewModel = (function () {
     };
 
     OwnersViewModel.prototype.saveUser = function () {
-        var json = ko.toJSON(this);
+        var json = JSON.stringify({ Name: this.Name(), Pets: this.Pets(), Age: this.Age(), Id: 123 });
+        json = ko.toJSON(this);
         this.owners.push(this);
         $.ajax({
             url: "/owners/save",
             method: 'POST',
             contentType: "application/json",
+            dataType: 'json',
             data: json
         }).done(function (data) {
             console.log(data);
@@ -57,13 +62,11 @@ var OwnersViewModel = (function () {
         $.ajax({
             url: "/owners"
         }).done(function (data) {
-            debugger;
             var ownersFromServer = ko.toJS(data);
             for (var i = 0; i < ownersFromServer.length; i++) {
                 _this.owners.push(ownersFromServer[i]);
             }
         }).fail(function (ex) {
-            debugger;
             console.log(ex);
         });
     };

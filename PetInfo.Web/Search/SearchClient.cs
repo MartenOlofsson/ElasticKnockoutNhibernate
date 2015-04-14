@@ -25,9 +25,9 @@ namespace PetInfo.Web.Search
             }
         }
 
-        public async void Index(Owner owner)
+        public void Index(Owner owner)
         {
-            await Client.IndexAsync(owner, x => x.Index("owners"));
+            Client.Index(owner, x => x.Index("owners").Id(owner.Id));
         }
 
         public async Task<ISearchResponse<Owner>> GetAll()
@@ -39,6 +39,11 @@ namespace PetInfo.Web.Search
             return await results;
         }
 
+        public void Delete()
+        {
+            Client.DeleteIndex("owners");
+        }
+
         public async Task<ISearchResponse<Owner>> Search(string query)
         {
             var results = Client.SearchAsync<Owner>(s => s
@@ -46,7 +51,8 @@ namespace PetInfo.Web.Search
                 .Size(10)
                 .Query(q => q
                     .Term(p => p.Name, query)
-                    ));
+                  )
+                    .FacetTerm(x => x.OnField(f => f.Age)));
 
             return await results;
         }
