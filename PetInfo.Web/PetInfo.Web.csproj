@@ -40,6 +40,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Elasticsearch.Net">
+      <HintPath>..\packages\Elasticsearch.Net.1.4.3\lib\net45\Elasticsearch.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentNHibernate">
+      <HintPath>..\packages\FluentNHibernate.2.0.1.0\lib\net40\FluentNHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections">
+      <HintPath>..\packages\Iesi.Collections.4.0.0.4000\lib\net40\Iesi.Collections.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Owin">
       <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
@@ -52,6 +61,19 @@
     </Reference>
     <Reference Include="Nancy.Owin">
       <HintPath>..\packages\Nancy.Owin.1.1\lib\net40\Nancy.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Nancy.Serialization.JsonNet">
+      <HintPath>..\packages\Nancy.Serialization.JsonNet.0.23.2\lib\net40\Nancy.Serialization.JsonNet.dll</HintPath>
+    </Reference>
+    <Reference Include="Nest">
+      <HintPath>..\packages\NEST.1.4.3\lib\net45\Nest.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\packages\NHibernate.4.0.0.4000\lib\net40\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
@@ -74,6 +96,10 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Test.mdf" />
+    <Content Include="App_Data\Test_log.ldf">
+      <DependentUpon>Test.mdf</DependentUpon>
+    </Content>
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
@@ -90,12 +116,21 @@
     <Content Include="static\scripts\knockout-3.3.0.js" />
     <Content Include="static\scripts\ownerViewModel.js" />
     <Content Include="views\index.html" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Boostrappers\CustomBootStrapper.cs" />
+    <Compile Include="Hibernate\NhibernateHelper.cs" />
+    <Compile Include="Hibernate\OwnerRepository.cs" />
+    <Compile Include="models\Pet.cs" />
+    <Compile Include="models\PetMap.cs" />
     <Compile Include="modules\IndexModule.cs" />
     <Compile Include="models\Owner.cs" />
+    <Compile Include="modules\OwnerModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Search\SearchClient.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
