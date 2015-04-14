@@ -39,22 +39,24 @@ namespace PetInfo.Web.Search
             return await results;
         }
 
-        public void Delete()
-        {
-            Client.DeleteIndex("owners");
-        }
-
         public async Task<ISearchResponse<Owner>> Search(string query)
         {
             var results = Client.SearchAsync<Owner>(s => s
                 .From(0)
                 .Size(10)
                 .Query(q => q
-                    .Term(p => p.Name, query)
-                  )
-                    .FacetTerm(x => x.OnField(f => f.Age)));
+                    .Fuzzy(f => f
+                        .OnField("_all")
+                        .Value(query))
+                )
+                .FacetTerm(x => x.OnField(f => f.Age)));
 
             return await results;
+        }
+
+        public void Delete()
+        {
+            Client.DeleteIndex("owners");
         }
     }
 }
